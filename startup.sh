@@ -35,6 +35,7 @@ else
     # clone or update private repos
     REPOS=(
         "ssh://jolsho.com/~/website.git"
+        "ssh://jolsho.com/~/repos/dev_env.git"
     )
     for REPO in "${REPOS[@]}"; do
         DIR="$HOME/workspace/$(basename $REPO .git)"

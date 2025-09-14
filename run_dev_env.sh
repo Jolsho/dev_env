@@ -26,7 +26,7 @@ fi
 IMAGE_NAME="${1:-jolsho_dev_env}"
 
 # Optional second argument: projects path
-PROJECTS_PATH="${2:-$HOME/projects}"
+PROJECTS_PATH="${2:-$HOME/Desktop/repos}"
 
 echo "Building Docker image: $IMAGE_NAME"
 echo "Projects path: $PROJECTS_PATH"

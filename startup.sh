@@ -33,18 +33,22 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     echo "SSH agent not found, cannot clone private repos"
 else
     # clone or update private repos
+    REPO_ROOT="ssh://jolsho.com/~/repos"
     REPOS=(
-        "ssh://jolsho.com/~/website.git"
-        "ssh://jolsho.com/~/repos/dev_env.git"
+        "website.git"
+        "dev_env.git"
     )
+
+    LOCAL_ROOT="$HOME/workspace"
     for REPO in "${REPOS[@]}"; do
-        DIR="$HOME/workspace/$(basename $REPO .git)"
+        REPO_NAME=$(basename "$REPO" .git)
+        DIR="$LOCAL_ROOT/$REPO_NAME"
         if [ -d "$DIR/.git" ]; then
             echo "Updating $DIR..."
-            git -C "$DIR" pull
+            git -C "$DIR" pull --ff-only
         else
             echo "Cloning $REPO..."
-            git clone "$REPO" "$DIR"
+            git clone "$REPO_ROOT/$REPO" "$DIR"
         fi
     done
 fi

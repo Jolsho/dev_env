@@ -35,8 +35,9 @@ else
     # clone or update private repos
     REPO_ROOT="ssh://jolsho.com/~/repos"
     REPOS=(
-        "website.git"
-        "dev_env.git"
+        #"website.git"
+        #"dev_env.git"
+        #"wallet.git"
     )
 
     LOCAL_ROOT="$HOME/workspace"

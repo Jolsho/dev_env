@@ -21,12 +21,14 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     echo "Warning: SSH agent not detected. Private repo access may fail."
 fi
 
-
 # Default image name
 IMAGE_NAME="${1:-jolsho_dev_env}"
+USER_NAME="${2:-jolsho}"
+NAME="${3:-jolsho}"
+EMAIL="${4:-joshuaolson13@gmail.com}"
 
 # Optional second argument: projects path
-PROJECTS_PATH="${2:-$HOME/Desktop/repos}"
+PROJECTS_PATH="${5:-$HOME/Desktop/repos}"
 
 echo "Building Docker image: $IMAGE_NAME"
 echo "Projects path: $PROJECTS_PATH"
@@ -34,18 +36,19 @@ echo "Projects path: $PROJECTS_PATH"
 # Ensure the directory exists
 mkdir -p "$PROJECTS_PATH"
 
-# Docker image name
-IMAGE_NAME="jolsho_dev_env"
-
 # Build the image
-sudo docker build --build-arg USER_ID=$(id -u) \
+sudo docker build \
+    --build-arg USER_ID=$(id -u) \
     --build-arg GROUP_ID=$(id -g) \
+    --build-arg USER_NAME=$USER_NAME \
+    --build-arg NAME=$NAME \
+    --build-arg EMAIL=$EMAIL \
     -t "$IMAGE_NAME" .
 
-sudo docker run -it --name jolsho_dev \
+sudo docker run -it --name dev_env \
   -v $SSH_AUTH_SOCK:/ssh-agent \
   -e SSH_AUTH_SOCK=/ssh-agent \
-  -v ~/.ssh/known_hosts:/home/jolsho/.ssh/known_hosts:ro \
-  -v ~/.ssh/config:/home/jolsho/.ssh/config:ro \
-  -v "$PROJECTS_PATH":/home/jolsho/workspace \
+  -v ~/.ssh/known_hosts:/home/$USER_NAME/.ssh/known_hosts:ro \
+  -v ~/.ssh/config:/home/$USER_NAME/.ssh/config:ro \
+  -v $PROJECTS_PATH:/home/$USER_NAME/workspace \
   "$IMAGE_NAME"

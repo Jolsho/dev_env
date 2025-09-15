@@ -11,9 +11,11 @@ RUN apt-get update && apt-get install -y \
 RUN deluser --remove-home ubuntu || true
 
 # Create a new non-root user
-ARG USER_NAME=jolsho
 ARG USER_ID=1000
 ARG GROUP_ID=1000
+ARG USER_NAME=jolsho
+ARG NAME=Joshua
+ARG EMAIL=joshuaolson13@gmail.com
 
 RUN groupadd -g $GROUP_ID $USER_NAME \
     && useradd -m -u $USER_ID -g $GROUP_ID -s /bin/bash $USER_NAME \
@@ -25,8 +27,8 @@ USER $USER_NAME
 WORKDIR /home/$USER_NAME
 
 # Configure Git
-RUN git config --global user.name "Joshua" \
-    && git config --global user.email "joshuaolson13@gmail.com"
+RUN git config --global user.name $NAME \
+    && git config --global user.email $EMAIL
 
 #########################################################################################
 # Install NVM & Node.js
@@ -49,7 +51,7 @@ ENV PATH="/home/$USER_NAME/.cargo/bin:${PATH}"
 
 #########################################################################################
 # Install Go
-ENV GO_VERSION=1.23.1
+ENV GO_VERSION=1.25.1
 RUN wget https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
     sudo tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
     rm go${GO_VERSION}.linux-amd64.tar.gz

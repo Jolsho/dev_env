@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default container name
-CONTAINER_NAME="jolsho_dev"
+CONTAINER_NAME="dev_env"
 
 # Check argument
 COMMAND="$1"

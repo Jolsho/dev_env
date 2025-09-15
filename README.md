@@ -1,0 +1,1 @@
+This is a personal developement container. I got tired of porting all my configs and projects through on every miniscule change. This allows me to replicate my environment from wherever, whenever, and with a single command. This also allowed me to replicate my environment onto, and work from other operating systems like Windows and MacOS.
